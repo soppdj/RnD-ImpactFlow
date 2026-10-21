@@ -33,8 +33,8 @@ export const Navbar = () => {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-teal-100/60 shadow-xs">
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 md:px-14 lg:px-20 xl:px-24">
         <div className="flex items-center justify-between h-16">
           
           {/* Brand Logo & NGO Title */}

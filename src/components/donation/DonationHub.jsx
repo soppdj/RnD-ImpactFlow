@@ -27,6 +27,56 @@ import {
   ResponsiveContainer 
 } from 'recharts';
 
+// Custom 3D Isometric Bar Component for Recharts
+const Custom3DBar = (props) => {
+  const { x, y, width, height, isRealisasi } = props;
+  if (!height || height <= 0 || isNaN(y) || isNaN(x)) return null;
+
+  // Depth of 3D extrusion, dynamically constrained
+  const depth = Math.min(8, Math.max(3, Math.min(width * 0.28, height * 0.4)));
+
+  // 3D Facet Fills (Front, Top Highlight, Side Shadow)
+  const frontFill = isRealisasi ? 'url(#tosca3dGrad)' : 'url(#target3dGrad)';
+  const topFill = isRealisasi ? '#5eead4' : '#e2e8f0'; // crisp light reflection on top
+  const sideFill = isRealisasi ? '#0f766e' : '#475569'; // deeper ambient shadow on right facet
+
+  return (
+    <g className="transition-all duration-300">
+      {/* Front Face */}
+      <rect
+        x={x}
+        y={y}
+        width={width}
+        height={height}
+        fill={frontFill}
+        rx={1}
+      />
+      {/* Top Face (3D Roof Highlight) */}
+      <polygon
+        points={`
+          ${x},${y} 
+          ${x + depth},${y - depth} 
+          ${x + width + depth},${y - depth} 
+          ${x + width},${y}
+        `}
+        fill={topFill}
+        opacity={0.95}
+      />
+      {/* Right Side Face (3D Depth Shadow) */}
+      <polygon
+        points={`
+          ${x + width},${y} 
+          ${x + width + depth},${y - depth} 
+          ${x + width + depth},${y + height - depth} 
+          ${x + width},${y + height}
+        `}
+        fill={sideFill}
+        opacity={0.9}
+      />
+    </g>
+  );
+};
+
 export const DonationHub = () => {
   const { 
     donationPrograms, 
@@ -131,18 +181,21 @@ export const DonationHub = () => {
       const pct = targetVal > 0 ? ((actualVal / targetVal) * 100).toFixed(1) : '0';
 
       return (
-        <div className="bg-slate-900 text-white p-3 rounded-xl shadow-xl text-xs space-y-1.5 border border-slate-700">
-          <p className="font-bold text-slate-200 border-b border-slate-800 pb-1">{label}</p>
-          <div className="flex items-center justify-between gap-4">
-            <span className="text-slate-400">Target:</span>
+        <div className="bg-slate-900/95 backdrop-blur-md text-white p-3.5 rounded-xl shadow-2xl text-xs space-y-1.5 border border-teal-500/30">
+          <p className="font-bold text-slate-100 border-b border-slate-700/80 pb-1.5 flex items-center justify-between gap-3">
+            <span>{label}</span>
+            <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-teal-500/20 text-teal-300 font-medium">3D Monitor</span>
+          </p>
+          <div className="flex items-center justify-between gap-4 pt-0.5">
+            <span className="text-slate-400">Target Donasi:</span>
             <span className="font-semibold text-slate-200">{formatRupiah(targetVal)}</span>
           </div>
           <div className="flex items-center justify-between gap-4">
-            <span className="text-emerald-400">Realisasi:</span>
-            <span className="font-bold text-emerald-400">{formatRupiah(actualVal)}</span>
+            <span className="text-teal-300 font-semibold">Realisasi (Terkumpul):</span>
+            <span className="font-bold text-teal-300">{formatRupiah(actualVal)}</span>
           </div>
-          <div className="flex items-center justify-between gap-4 pt-1 border-t border-slate-800 text-[11px]">
-            <span className="text-slate-400">Pencapaian:</span>
+          <div className="flex items-center justify-between gap-4 pt-1.5 border-t border-slate-800 text-[11px]">
+            <span className="text-slate-400">Persentase Capaian:</span>
             <span className="font-extrabold text-amber-400">{pct}%</span>
           </div>
         </div>
@@ -153,15 +206,15 @@ export const DonationHub = () => {
 
   const getPercentageColor = (pct) => {
     const p = parseFloat(pct) || 0;
-    if (p >= 75) return 'text-growth-700 bg-growth-50 border-growth-200';
+    if (p >= 75) return 'text-teal-800 bg-teal-50 border-teal-200';
     if (p >= 40) return 'text-brand-700 bg-brand-50 border-brand-200';
-    if (p >= 20) return 'text-amber-700 bg-amber-50 border-amber-200';
+    if (p >= 20) return 'text-amber-800 bg-amber-50 border-amber-200';
     return 'text-rose-700 bg-rose-50 border-rose-200';
   };
 
   const getBarColor = (pct) => {
     const p = parseFloat(pct) || 0;
-    if (p >= 75) return 'bg-growth-600';
+    if (p >= 75) return 'bg-teal-600';
     if (p >= 40) return 'bg-brand-600';
     if (p >= 20) return 'bg-amber-500';
     return 'bg-rose-500';
@@ -170,21 +223,16 @@ export const DonationHub = () => {
   return (
     <div className="space-y-6">
       
-      {/* Top Header Card */}
-      <div className="bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-6 shadow-sm">
+      {/* Top Header Card - Cleaned subtitle per user request */}
+      <div className="bg-white/95 rounded-2xl border border-teal-100/80 p-5 sm:p-6 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="p-1.5 rounded-lg bg-growth-50 text-growth-700 border border-growth-200/60">
-                <Coins className="w-5 h-5" />
-              </span>
-              <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 font-heading">
-                Progres Penghimpunan Donasi
-              </h1>
-            </div>
-            <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-              Monitoring realisasi target vs aktual donasi (Zakat, Wakaf, Infaq & Sedekah, Wali Asuh) untuk memandu inovasi retensi R&D.
-            </p>
+          <div className="flex items-center gap-2.5">
+            <span className="p-2 rounded-xl bg-teal-50 text-brand-600 border border-teal-200/60 shadow-xs">
+              <Coins className="w-5 h-5" />
+            </span>
+            <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 font-heading tracking-tight">
+              Progres Penghimpunan Donasi
+            </h1>
           </div>
 
           {/* Action Controls */}
@@ -201,7 +249,7 @@ export const DonationHub = () => {
                 <button
                   type="button"
                   onClick={handleSaveAll}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-xl bg-growth-600 hover:bg-growth-700 text-white shadow-sm transition active:scale-95"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-xl bg-brand-600 hover:bg-brand-700 text-white shadow-xs transition active:scale-95"
                 >
                   <Save className="w-3.5 h-3.5" />
                   <span>Simpan Perubahan</span>
@@ -212,7 +260,7 @@ export const DonationHub = () => {
                 <button
                   type="button"
                   onClick={() => setIsAddingNew(!isAddingNew)}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 transition"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl border border-teal-200 bg-white hover:bg-teal-50/50 text-slate-700 transition shadow-2xs"
                 >
                   <Plus className="w-3.5 h-3.5 text-brand-600" />
                   <span>Tambah Program</span>
@@ -220,7 +268,7 @@ export const DonationHub = () => {
                 <button
                   type="button"
                   onClick={handleStartEdit}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-xl bg-brand-50 hover:bg-brand-100 text-brand-700 border border-brand-200 transition active:scale-95"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-xl bg-brand-50 hover:bg-brand-100 text-brand-700 border border-brand-200/80 transition active:scale-95 shadow-2xs"
                 >
                   <Edit3 className="w-3.5 h-3.5" />
                   <span>Edit Data</span>
@@ -232,7 +280,7 @@ export const DonationHub = () => {
 
         {/* Collapsible Form Tambah Program Baru */}
         {isAddingNew && (
-          <form onSubmit={handleCreateNew} className="mt-5 pt-4 border-t border-slate-100 bg-slate-50/70 p-4 rounded-xl border border-slate-200">
+          <form onSubmit={handleCreateNew} className="mt-5 pt-4 border-t border-teal-100/80 bg-teal-50/40 p-4 rounded-xl border border-teal-100">
             <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider mb-3 flex items-center gap-1.5">
               <Plus className="w-4 h-4 text-brand-600" />
               <span>Tambah Program Donasi Baru</span>
@@ -246,7 +294,7 @@ export const DonationHub = () => {
                   placeholder="Contoh: Qurban Berkah"
                   value={newProgram.program}
                   onChange={(e) => setNewProgram({ ...newProgram, program: e.target.value })}
-                  className="w-full text-xs px-3 py-2 bg-white rounded-lg border border-slate-200 focus:outline-none focus:border-brand-500"
+                  className="w-full text-xs px-3 py-2 bg-white rounded-lg border border-slate-200 focus:outline-none focus:border-brand-500 shadow-2xs"
                 />
               </div>
               <div>
@@ -258,7 +306,7 @@ export const DonationHub = () => {
                   placeholder="Contoh: 30000000"
                   value={newProgram.target}
                   onChange={(e) => setNewProgram({ ...newProgram, target: e.target.value })}
-                  className="w-full text-xs px-3 py-2 bg-white rounded-lg border border-slate-200 focus:outline-none focus:border-brand-500"
+                  className="w-full text-xs px-3 py-2 bg-white rounded-lg border border-slate-200 focus:outline-none focus:border-brand-500 shadow-2xs"
                 />
               </div>
               <div>
@@ -270,7 +318,7 @@ export const DonationHub = () => {
                   placeholder="Contoh: 15000000"
                   value={newProgram.actual}
                   onChange={(e) => setNewProgram({ ...newProgram, actual: e.target.value })}
-                  className="w-full text-xs px-3 py-2 bg-white rounded-lg border border-slate-200 focus:outline-none focus:border-brand-500"
+                  className="w-full text-xs px-3 py-2 bg-white rounded-lg border border-slate-200 focus:outline-none focus:border-brand-500 shadow-2xs"
                 />
               </div>
             </div>
@@ -284,7 +332,7 @@ export const DonationHub = () => {
               </button>
               <button
                 type="submit"
-                className="px-4 py-1.5 text-xs font-semibold bg-brand-600 hover:bg-brand-700 text-white rounded-lg shadow-sm"
+                className="px-4 py-1.5 text-xs font-semibold bg-brand-600 hover:bg-brand-700 text-white rounded-lg shadow-xs"
               >
                 Simpan Program
               </button>
@@ -293,12 +341,12 @@ export const DonationHub = () => {
         )}
       </div>
 
-      {/* 4 Summary Stat Cards */}
+      {/* 4 Summary Stat Cards - Soft Warm Tosca & White Gradient */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total Target */}
-        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-3.5">
+        <div className="bg-white/95 p-4 sm:p-5 rounded-2xl border border-teal-100/70 shadow-xs flex items-center gap-3.5">
           <div className="p-3 rounded-xl bg-slate-100 text-slate-700">
-            <Target className="w-5 h-5" />
+            <Target className="w-5 h-5 text-slate-600" />
           </div>
           <div>
             <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Total Target</p>
@@ -307,19 +355,19 @@ export const DonationHub = () => {
         </div>
 
         {/* Total Realisasi */}
-        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-3.5">
-          <div className="p-3 rounded-xl bg-growth-50 text-growth-700">
-            <Wallet className="w-5 h-5 text-growth-600" />
+        <div className="bg-gradient-to-br from-white via-teal-50/20 to-teal-50/40 p-4 sm:p-5 rounded-2xl border border-teal-200/80 shadow-xs flex items-center gap-3.5">
+          <div className="p-3 rounded-xl bg-teal-100/70 text-teal-800">
+            <Wallet className="w-5 h-5 text-brand-600" />
           </div>
           <div>
-            <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Terkumpul (Actual)</p>
-            <p className="text-base sm:text-lg font-extrabold text-growth-700 mt-0.5">{formatRupiah(totalActual)}</p>
+            <p className="text-[11px] font-bold text-teal-800 uppercase tracking-wider">Terkumpul (Actual)</p>
+            <p className="text-base sm:text-lg font-extrabold text-teal-800 mt-0.5">{formatRupiah(totalActual)}</p>
           </div>
         </div>
 
         {/* Capaian Rata-Rata */}
-        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-3.5">
-          <div className="p-3 rounded-xl bg-brand-50 text-brand-700">
+        <div className="bg-white/95 p-4 sm:p-5 rounded-2xl border border-teal-100/70 shadow-xs flex items-center gap-3.5">
+          <div className="p-3 rounded-xl bg-teal-50 text-brand-700">
             <Percent className="w-5 h-5 text-brand-600" />
           </div>
           <div className="flex-1">
@@ -337,7 +385,7 @@ export const DonationHub = () => {
         </div>
 
         {/* Sisa Target */}
-        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-3.5">
+        <div className="bg-white/95 p-4 sm:p-5 rounded-2xl border border-teal-100/70 shadow-xs flex items-center gap-3.5">
           <div className="p-3 rounded-xl bg-amber-50 text-amber-700">
             <ArrowUpRight className="w-5 h-5 text-amber-600" />
           </div>
@@ -348,15 +396,15 @@ export const DonationHub = () => {
         </div>
       </div>
 
-      {/* Grafik Batang: Komparasi Target vs Realisasi */}
-      <div className="bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-6 shadow-sm space-y-4">
+      {/* Grafik Progres Penghimpunan Donasi (3D Bar Chart) */}
+      <div className="bg-white/95 rounded-2xl border border-teal-100/80 p-5 sm:p-6 shadow-xs space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-blue-50 text-brand-600">
+            <span className="p-1.5 rounded-lg bg-teal-50 text-brand-600 border border-teal-200/60 shadow-2xs">
               <BarChart3 className="w-4 h-4" />
             </span>
             <h2 className="text-sm sm:text-base font-bold text-slate-900 font-heading">
-              Grafik Batang Komparasi: Target vs Realisasi
+              Grafik Progres Penghimpunan Donasi
             </h2>
           </div>
           <span className="text-xs font-medium text-slate-500 hidden sm:inline">
@@ -364,13 +412,25 @@ export const DonationHub = () => {
           </span>
         </div>
 
-        <div className="h-72 w-full pt-2">
+        <div className="h-76 w-full pt-2">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={chartData} margin={{ top: 10, right: 10, left: 10, bottom: 20 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+            <BarChart data={chartData} margin={{ top: 20, right: 15, left: 10, bottom: 20 }}>
+              {/* SVG 3D Gradients Definition */}
+              <defs>
+                <linearGradient id="tosca3dGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#14b8a6" />
+                  <stop offset="100%" stopColor="#0d9488" />
+                </linearGradient>
+                <linearGradient id="target3dGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#94a3b8" />
+                  <stop offset="100%" stopColor="#64748b" />
+                </linearGradient>
+              </defs>
+
+              <CartesianGrid strokeDasharray="3 3" stroke="#e6f4f1" vertical={false} />
               <XAxis 
                 dataKey="name" 
-                tick={{ fill: '#64748b', fontSize: 11, fontWeight: 500 }} 
+                tick={{ fill: '#475569', fontSize: 11, fontWeight: 600 }} 
                 axisLine={{ stroke: '#cbd5e1' }}
                 tickLine={false}
               />
@@ -384,21 +444,33 @@ export const DonationHub = () => {
               <Legend 
                 verticalAlign="top" 
                 align="right" 
-                iconType="circle"
-                wrapperStyle={{ paddingBottom: '12px', fontSize: '12px', fontWeight: 600 }}
+                iconType="rect"
+                wrapperStyle={{ paddingBottom: '14px', fontSize: '12px', fontWeight: 600 }}
               />
-              <Bar dataKey="Target" fill="#94a3b8" radius={[6, 6, 0, 0]} maxBarSize={45} />
-              <Bar dataKey="Realisasi" fill="#10b981" radius={[6, 6, 0, 0]} maxBarSize={45} />
+              <Bar 
+                dataKey="Target" 
+                name="Target Donasi" 
+                fill="#94a3b8" 
+                maxBarSize={42} 
+                shape={(props) => <Custom3DBar {...props} isRealisasi={false} />}
+              />
+              <Bar 
+                dataKey="Realisasi" 
+                name="Realisasi (Terkumpul)" 
+                fill="#0d9488" 
+                maxBarSize={42} 
+                shape={(props) => <Custom3DBar {...props} isRealisasi={true} />}
+              />
             </BarChart>
           </ResponsiveContainer>
         </div>
       </div>
 
       {/* Tabel Progres Penghimpunan Donasi */}
-      <div className="bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-6 shadow-sm space-y-4">
-        <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+      <div className="bg-white/95 rounded-2xl border border-teal-100/80 p-5 sm:p-6 shadow-xs space-y-4">
+        <div className="flex items-center justify-between border-b border-teal-100/70 pb-3">
           <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-slate-100 text-slate-700">
+            <span className="p-1.5 rounded-lg bg-teal-50 text-brand-600 border border-teal-200/50">
               <Coins className="w-4 h-4 text-brand-600" />
             </span>
             <h2 className="text-sm sm:text-base font-bold text-slate-900 font-heading">
@@ -412,10 +484,10 @@ export const DonationHub = () => {
           )}
         </div>
 
-        <div className="overflow-x-auto rounded-xl border border-slate-100">
+        <div className="overflow-x-auto rounded-xl border border-teal-100/70">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="bg-slate-50/90 text-slate-600 font-bold uppercase tracking-wider text-[11px] border-b border-slate-200">
+              <tr className="bg-teal-50/50 text-slate-700 font-bold uppercase tracking-wider text-[11px] border-b border-teal-100">
                 <th className="py-3 px-4">Program</th>
                 <th className="py-3 px-4">Target Donasi</th>
                 <th className="py-3 px-4">Actual (Terkumpul)</th>
@@ -423,14 +495,14 @@ export const DonationHub = () => {
                 {isEditing && <th className="py-3 px-4 text-center">Aksi</th>}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-teal-50/70">
               {activeList.map((row) => {
                 const targetNum = parseFloat(row.target) || 0;
                 const actualNum = parseFloat(row.actual) || 0;
                 const pct = targetNum > 0 ? ((actualNum / targetNum) * 100).toFixed(1) : '0';
 
                 return (
-                  <tr key={row.id} className="hover:bg-slate-50/60 transition group">
+                  <tr key={row.id} className="hover:bg-teal-50/30 transition group">
                     {/* Program */}
                     <td className="py-3.5 px-4 font-semibold text-slate-900">
                       {isEditing ? (
@@ -470,7 +542,7 @@ export const DonationHub = () => {
                     </td>
 
                     {/* Actual */}
-                    <td className="py-3.5 px-4 font-mono font-bold text-growth-700">
+                    <td className="py-3.5 px-4 font-mono font-bold text-teal-800">
                       {isEditing ? (
                         <div>
                           <input
@@ -526,7 +598,7 @@ export const DonationHub = () => {
             </tbody>
 
             {/* Total Footer Row */}
-            <tfoot className="bg-slate-50/90 font-bold border-t-2 border-slate-200">
+            <tfoot className="bg-teal-50/40 font-bold border-t-2 border-teal-200/80">
               <tr>
                 <td className="py-3.5 px-4 text-slate-900 uppercase text-[11px]">
                   Total Akumulasi
@@ -534,7 +606,7 @@ export const DonationHub = () => {
                 <td className="py-3.5 px-4 font-mono text-slate-900">
                   {formatRupiah(totalTarget)}
                 </td>
-                <td className="py-3.5 px-4 font-mono text-growth-700">
+                <td className="py-3.5 px-4 font-mono text-teal-800">
                   {formatRupiah(totalActual)}
                 </td>
                 <td className="py-3.5 px-4">
