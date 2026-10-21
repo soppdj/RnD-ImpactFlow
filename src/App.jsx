@@ -67,7 +67,7 @@ function App() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-slate-50 flex flex-col selection:bg-brand-100 selection:text-brand-900">
+      <div className="min-h-screen bg-gradient-to-br from-[#d9f0ea] via-[#e5f5f0] to-[#d3ede5] flex flex-col selection:bg-brand-200 selection:text-brand-950">
         <LoginScreen />
         <Toast />
       </div>
@@ -75,10 +75,10 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col selection:bg-brand-100 selection:text-brand-900">
+    <div className="min-h-screen bg-gradient-to-br from-[#d9f0ea] via-[#e5f5f0] to-[#d3ede5] flex flex-col selection:bg-brand-200 selection:text-brand-950">
       <Navbar />
       <MainContent />
-      <footer className="hidden md:block py-6 border-t border-slate-200/60 bg-white/40 text-center text-xs text-slate-500 font-medium">
+      <footer className="hidden md:block py-6 border-t border-teal-200/80 bg-white/60 text-center text-xs text-teal-800 font-medium">
         <p>R&D ImpactFlow &bull; Powered by FatherLab &copy; 2026</p>
       </footer>
       <BottomNav />

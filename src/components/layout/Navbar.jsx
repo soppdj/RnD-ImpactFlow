@@ -4,36 +4,28 @@ import { AppLogo } from '../common/AppLogo';
 import { 
   Building2, 
   Sparkles, 
-  PlusCircle, 
   CheckCircle2, 
   FileText, 
   CalendarCheck, 
   LayoutDashboard, 
   User, 
   BookOpen, 
-  Archive,
-  Coins,
+  Archive, 
+  Coins, 
   LogOut 
 } from 'lucide-react';
 
 export const Navbar = () => {
   const { 
     userProfile, 
-    setIsTaskModalOpen, 
-    setEditingTask,
-    activeTab,
-    setActiveTab,
-    progressMetrics,
-    logout
+    activeTab, 
+    setActiveTab, 
+    progressMetrics, 
+    logout 
   } = useApp();
 
-  const handleNewTask = () => {
-    setEditingTask(null);
-    setIsTaskModalOpen(true);
-  };
-
   return (
-    <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-teal-100/60 shadow-xs">
+    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-teal-200/80 shadow-xs">
       <div className="max-w-7xl mx-auto px-6 sm:px-10 md:px-14 lg:px-20 xl:px-24">
         <div className="flex items-center justify-between h-16">
           
@@ -44,12 +36,12 @@ export const Navbar = () => {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-heading font-bold text-lg text-slate-900 tracking-tight">
+                <span className="font-heading font-bold text-lg text-teal-950 tracking-tight">
                   R&D ImpactFlow
                 </span>
               </div>
-              <p className="text-xs text-slate-500 flex items-center gap-1">
-                <Building2 className="w-3 h-3 text-slate-400" />
+              <p className="text-xs text-teal-700 flex items-center gap-1">
+                <Building2 className="w-3 h-3 text-teal-600" />
                 <span className="truncate max-w-[180px] sm:max-w-[240px] font-medium">
                   {userProfile?.foundation_name || 'Yayasan Khoirur Rooziqiin'}
                 </span>
@@ -58,27 +50,27 @@ export const Navbar = () => {
           </div>
 
           {/* Desktop Navigation Tabs */}
-          <nav className="hidden lg:flex items-center gap-1 bg-slate-100/80 p-1 rounded-xl border border-slate-200/70">
+          <nav className="hidden lg:flex items-center gap-1 bg-teal-100/60 p-1 rounded-xl border border-teal-200/80 shadow-2xs">
             <button
               onClick={() => setActiveTab('dashboard')}
               className={`flex items-center gap-2 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                 activeTab === 'dashboard'
-                  ? 'bg-white text-brand-700 shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
+                  ? 'bg-white text-teal-900 shadow-xs border border-teal-200/50 font-bold'
+                  : 'text-teal-900/80 hover:text-teal-950 hover:bg-white/60'
               }`}
             >
-              <LayoutDashboard className="w-3.5 h-3.5" />
+              <LayoutDashboard className="w-3.5 h-3.5 text-teal-700" />
               Dashboard
             </button>
             <button
               onClick={() => setActiveTab('agenda')}
               className={`flex items-center gap-2 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                 activeTab === 'agenda'
-                  ? 'bg-white text-brand-700 shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
+                  ? 'bg-white text-teal-900 shadow-xs border border-teal-200/50 font-bold'
+                  : 'text-teal-900/80 hover:text-teal-950 hover:bg-white/60'
               }`}
             >
-              <CalendarCheck className="w-3.5 h-3.5" />
+              <CalendarCheck className="w-3.5 h-3.5 text-teal-700" />
               Agenda
               {progressMetrics.pendingTasks > 0 && (
                 <span className="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">
@@ -90,75 +82,65 @@ export const Navbar = () => {
               onClick={() => setActiveTab('journal')}
               className={`flex items-center gap-2 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                 activeTab === 'journal'
-                  ? 'bg-white text-brand-700 shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
+                  ? 'bg-white text-teal-900 shadow-xs border border-teal-200/50 font-bold'
+                  : 'text-teal-900/80 hover:text-teal-950 hover:bg-white/60'
               }`}
             >
-              <BookOpen className="w-3.5 h-3.5" />
+              <BookOpen className="w-3.5 h-3.5 text-teal-700" />
               Jurnal
             </button>
             <button
               onClick={() => setActiveTab('history')}
               className={`flex items-center gap-2 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                 activeTab === 'history'
-                  ? 'bg-white text-brand-700 shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
+                  ? 'bg-white text-teal-900 shadow-xs border border-teal-200/50 font-bold'
+                  : 'text-teal-900/80 hover:text-teal-950 hover:bg-white/60'
               }`}
             >
-              <Archive className="w-3.5 h-3.5" />
+              <Archive className="w-3.5 h-3.5 text-teal-700" />
               Histori
             </button>
             <button
               onClick={() => setActiveTab('donasi')}
               className={`flex items-center gap-2 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                 activeTab === 'donasi'
-                  ? 'bg-white text-brand-700 shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
+                  ? 'bg-white text-teal-900 shadow-xs border border-teal-200/50 font-bold'
+                  : 'text-teal-900/80 hover:text-teal-950 hover:bg-white/60'
               }`}
             >
-              <Coins className="w-3.5 h-3.5" />
+              <Coins className="w-3.5 h-3.5 text-teal-700" />
               Donasi
             </button>
             <button
               onClick={() => setActiveTab('report')}
               className={`flex items-center gap-2 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                 activeTab === 'report'
-                  ? 'bg-white text-brand-700 shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
+                  ? 'bg-white text-teal-900 shadow-xs border border-teal-200/50 font-bold'
+                  : 'text-teal-900/80 hover:text-teal-950 hover:bg-white/60'
               }`}
             >
-              <FileText className="w-3.5 h-3.5" />
+              <FileText className="w-3.5 h-3.5 text-teal-700" />
               Laporan
             </button>
             <button
               onClick={() => setActiveTab('profile')}
               className={`flex items-center gap-2 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                 activeTab === 'profile'
-                  ? 'bg-white text-brand-700 shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
+                  ? 'bg-white text-teal-900 shadow-xs border border-teal-200/50 font-bold'
+                  : 'text-teal-900/80 hover:text-teal-950 hover:bg-white/60'
               }`}
             >
-              <User className="w-3.5 h-3.5" />
+              <User className="w-3.5 h-3.5 text-teal-700" />
               Profil
             </button>
           </nav>
 
-          {/* Right Section: Action Button & Profile */}
+          {/* Right Section: Profile Avatar & Logout */}
           <div className="flex items-center gap-2.5">
-            {/* Quick Add Task Button */}
-            <button
-              onClick={handleNewTask}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 hover:bg-brand-700 text-white shadow-sm transition active:scale-95"
-            >
-              <PlusCircle className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Tambah Tugas</span>
-              <span className="sm:hidden">Tambah</span>
-            </button>
-
             {/* User Avatar */}
             <div 
               onClick={() => setActiveTab('profile')}
-              className="w-8 h-8 rounded-full overflow-hidden border border-slate-300 ring-2 ring-transparent hover:ring-brand-400 cursor-pointer transition ml-1"
+              className="w-8 h-8 rounded-full overflow-hidden border-2 border-teal-300 ring-2 ring-transparent hover:ring-brand-500 cursor-pointer transition ml-1"
               title="Pengaturan Profil"
             >
               <img
@@ -171,7 +153,7 @@ export const Navbar = () => {
             {/* Logout Button */}
             <button
               onClick={logout}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition"
+              className="p-1.5 rounded-lg text-teal-700 hover:text-rose-600 hover:bg-rose-50 transition"
               title="Keluar Sesi (Logout)"
             >
               <LogOut className="w-4 h-4" />

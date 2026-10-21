@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-gradient-to-b from-[#fbfdfc] via-[#f7faf8] to-[#f0f7f4] text-slate-800 antialiased font-sans min-h-screen selection:bg-brand-200 selection:text-brand-900;
+    @apply bg-[#e3f2ee] bg-gradient-to-br from-[#d9f0ea] via-[#e5f5f0] to-[#d3ede5] text-teal-950 antialiased font-sans min-h-screen selection:bg-brand-200 selection:text-brand-950;
   }
 }
 

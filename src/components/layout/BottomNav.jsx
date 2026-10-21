@@ -18,14 +18,14 @@ export const BottomNav = () => {
   } = useApp();
 
   return (
-    <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/90 pb-safe shadow-lg pwa-bottom-nav">
+    <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-teal-200/80 pb-safe shadow-lg pwa-bottom-nav">
       <div className="grid grid-cols-6 h-16 max-w-xl mx-auto items-center px-1">
         
         {/* Dashboard */}
         <button
           onClick={() => setActiveTab('dashboard')}
           className={`flex flex-col items-center justify-center py-1 transition-colors ${
-            activeTab === 'dashboard' ? 'text-brand-600' : 'text-slate-500 hover:text-slate-800'
+            activeTab === 'dashboard' ? 'text-teal-900 font-bold' : 'text-teal-700/80 hover:text-teal-950'
           }`}
         >
           <LayoutDashboard className={`w-5 h-5 ${activeTab === 'dashboard' ? 'stroke-[2.5]' : 'stroke-2'}`} />
@@ -36,7 +36,7 @@ export const BottomNav = () => {
         <button
           onClick={() => setActiveTab('agenda')}
           className={`relative flex flex-col items-center justify-center py-1 transition-colors ${
-            activeTab === 'agenda' ? 'text-brand-600' : 'text-slate-500 hover:text-slate-800'
+            activeTab === 'agenda' ? 'text-teal-900 font-bold' : 'text-teal-700/80 hover:text-teal-950'
           }`}
         >
           <div className="relative">
@@ -54,7 +54,7 @@ export const BottomNav = () => {
         <button
           onClick={() => setActiveTab('journal')}
           className={`flex flex-col items-center justify-center py-1 transition-colors ${
-            activeTab === 'journal' ? 'text-brand-600' : 'text-slate-500 hover:text-slate-800'
+            activeTab === 'journal' ? 'text-teal-900 font-bold' : 'text-teal-700/80 hover:text-teal-950'
           }`}
         >
           <BookOpen className={`w-5 h-5 ${activeTab === 'journal' ? 'stroke-[2.5]' : 'stroke-2'}`} />
@@ -65,7 +65,7 @@ export const BottomNav = () => {
         <button
           onClick={() => setActiveTab('donasi')}
           className={`flex flex-col items-center justify-center py-1 transition-colors ${
-            activeTab === 'donasi' ? 'text-brand-600' : 'text-slate-500 hover:text-slate-800'
+            activeTab === 'donasi' ? 'text-teal-900 font-bold' : 'text-teal-700/80 hover:text-teal-950'
           }`}
         >
           <Coins className={`w-5 h-5 ${activeTab === 'donasi' ? 'stroke-[2.5]' : 'stroke-2'}`} />
@@ -76,7 +76,7 @@ export const BottomNav = () => {
         <button
           onClick={() => setActiveTab('history')}
           className={`flex flex-col items-center justify-center py-1 transition-colors ${
-            activeTab === 'history' ? 'text-brand-600' : 'text-slate-500 hover:text-slate-800'
+            activeTab === 'history' ? 'text-teal-900 font-bold' : 'text-teal-700/80 hover:text-teal-950'
           }`}
         >
           <Archive className={`w-5 h-5 ${activeTab === 'history' ? 'stroke-[2.5]' : 'stroke-2'}`} />
@@ -87,7 +87,7 @@ export const BottomNav = () => {
         <button
           onClick={() => setActiveTab('profile')}
           className={`flex flex-col items-center justify-center py-1 transition-colors ${
-            activeTab === 'profile' ? 'text-brand-600' : 'text-slate-500 hover:text-slate-800'
+            activeTab === 'profile' ? 'text-teal-900 font-bold' : 'text-teal-700/80 hover:text-teal-950'
           }`}
         >
           <User className={`w-5 h-5 ${activeTab === 'profile' ? 'stroke-[2.5]' : 'stroke-2'}`} />

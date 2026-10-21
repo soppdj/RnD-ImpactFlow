@@ -88,20 +88,20 @@ export const TaskList = () => {
     <div className="space-y-6">
       
       {/* Top Header & Search Bar */}
-      <div className="bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-6 shadow-sm">
+      <div className="bg-white/95 rounded-2xl border border-teal-200/80 p-5 sm:p-6 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 font-heading">
+            <h1 className="text-xl sm:text-2xl font-extrabold text-teal-950 font-heading">
               Agenda Riset & Tindakan
             </h1>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="text-xs text-teal-700 mt-0.5">
               Daftar periksa deadline-driven tersortir otomatis dari tenggat terdekat
             </p>
           </div>
 
           <button
             onClick={handleOpenAddModal}
-            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold text-xs shadow-sm transition active:scale-95"
+            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold text-xs shadow-xs transition active:scale-95"
           >
             <PlusCircle className="w-4 h-4" />
             <span>Tambah Agenda Baru</span>
@@ -109,30 +109,30 @@ export const TaskList = () => {
         </div>
 
         {/* Filter Controls */}
-        <div className="mt-4 pt-4 border-t border-slate-100 flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
+        <div className="mt-4 pt-4 border-t border-teal-100 flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
           
           {/* Search Box */}
           <div className="relative flex-1 max-w-md">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-teal-600 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Cari agenda tugas atau kata kunci..."
-              className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition"
+              className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-teal-200 bg-teal-50/40 text-teal-950 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition"
             />
           </div>
 
           {/* LogFrame Category Select */}
           <div className="flex items-center gap-2">
-            <span className="text-[11px] font-semibold text-slate-500 flex items-center gap-1">
-              <Layers className="w-3.5 h-3.5 text-slate-400" />
+            <span className="text-[11px] font-semibold text-teal-800 flex items-center gap-1">
+              <Layers className="w-3.5 h-3.5 text-teal-600" />
               <span>LogFrame:</span>
             </span>
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="text-xs font-medium py-1.5 px-2.5 rounded-lg border border-slate-200 bg-white text-slate-700 focus:outline-none focus:border-brand-500"
+              className="text-xs font-medium py-1.5 px-2.5 rounded-lg border border-teal-200 bg-white text-teal-950 focus:outline-none focus:border-brand-500"
             >
               <option value="all">Semua Level</option>
               <option value="outcome">Outcome (Dampak)</option>
@@ -149,13 +149,13 @@ export const TaskList = () => {
             onClick={() => setDeadlineFilter('all')}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition flex items-center gap-1.5 ${
               deadlineFilter === 'all'
-                ? 'bg-slate-900 text-white'
-                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                ? 'bg-teal-900 text-white shadow-xs'
+                : 'bg-teal-50 text-teal-900 hover:bg-teal-100 border border-teal-200/70'
             }`}
           >
             <span>Semua</span>
             <span className={`text-[10px] px-1.5 rounded-full ${
-              deadlineFilter === 'all' ? 'bg-slate-800 text-white' : 'bg-slate-200 text-slate-700'
+              deadlineFilter === 'all' ? 'bg-teal-800 text-white' : 'bg-teal-200 text-teal-950'
             }`}>
               {counts.all}
             </span>

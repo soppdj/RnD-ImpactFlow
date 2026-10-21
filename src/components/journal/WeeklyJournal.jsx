@@ -137,25 +137,25 @@ export const WeeklyJournal = () => {
     <div className="space-y-6">
       
       {/* Header Banner */}
-      <div className="bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-6 shadow-sm">
+      <div className="bg-white/95 rounded-2xl border border-teal-200/80 p-5 sm:p-6 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <span className="p-1.5 rounded-lg bg-brand-50 text-brand-600">
-                <BookOpen className="w-4 h-4" />
+              <span className="p-1.5 rounded-lg bg-teal-50 text-teal-800 border border-teal-200/60">
+                <BookOpen className="w-4 h-4 text-brand-600" />
               </span>
-              <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 font-heading">
+              <h1 className="text-xl sm:text-2xl font-extrabold text-teal-950 font-heading">
                 Jurnal
               </h1>
             </div>
-            <p className="text-xs text-slate-500 mt-1">
+            <p className="text-xs text-teal-700 mt-1">
               Dokumentasi aktivitas riset, wawancara donatur, dan catatan harian terstruktur per minggu
             </p>
           </div>
 
           <button
             onClick={handleOpenAdd}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-sm transition active:scale-95 self-start sm:self-auto"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-xs transition active:scale-95 self-start sm:self-auto"
           >
             <Plus className="w-4 h-4" />
             <span>Tulis Jurnal Hari Ini</span>

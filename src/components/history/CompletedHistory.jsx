@@ -77,18 +77,18 @@ export const CompletedHistory = () => {
     <div className="space-y-6">
       
       {/* Header Banner */}
-      <div className="bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-6 shadow-sm">
+      <div className="bg-white/95 rounded-2xl border border-teal-200/80 p-5 sm:p-6 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <span className="p-1.5 rounded-lg bg-growth-50 text-growth-700">
-                <Archive className="w-4 h-4" />
+              <span className="p-1.5 rounded-lg bg-teal-50 text-teal-800 border border-teal-200/60">
+                <Archive className="w-4 h-4 text-brand-600" />
               </span>
-              <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 font-heading">
+              <h1 className="text-xl sm:text-2xl font-extrabold text-teal-950 font-heading">
                 Histori Kegiatan Selesai (Arsip Per Bulan)
               </h1>
             </div>
-            <p className="text-xs text-slate-500 mt-1">
+            <p className="text-xs text-teal-700 mt-1">
               Klik bulan untuk melihat rekam jejak deliverable riset, durasi kerja, dan pencapaian sebelumnya
             </p>
           </div>
