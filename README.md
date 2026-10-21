@@ -1,6 +1,6 @@
-# ImpactFlow — Philanthropy & NGO R&D Hub (PWA)
+# ImpactFlow — Philanthropy R&D Hub (PWA)
 
-A modern, responsive, Progressive Web App (PWA) tailored specifically for a solo **Research & Development (R&D) Manager** at a Philanthropy/NGO Foundation.
+A modern, responsive, Progressive Web App (PWA) tailored specifically for a solo **Research & Development (R&D) Manager** at a Philanthropy.
 
 Built with a **"Clean & Minimalist"** startup aesthetic featuring generous whitespace, light slate background (`bg-slate-50`), **Trustworthy Blue** (`#2563eb`), and **Growth Green** (`#10b981`).
 
