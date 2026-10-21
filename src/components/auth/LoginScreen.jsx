@@ -66,7 +66,7 @@ export const LoginScreen = () => {
           </h1>
           <p className="mt-2 text-xs sm:text-sm text-slate-600 flex items-center justify-center gap-1.5 font-medium">
             <Building2 className="w-4 h-4 text-brand-600" />
-            <span>Portal Privat RD Yayasan Khoirur Rooziqiin</span>
+            <span>Portal Privat R&D Yayasan Khoirur Rooziqiin</span>
           </p>
         </div>
 
@@ -177,7 +177,7 @@ export const LoginScreen = () => {
 
         {/* Footer */}
         <p className="mt-6 text-center text-xs text-slate-500 font-medium">
-          RD ImpactFlow . Powered by FatherLab c 2026
+          RD ImpactFlow &bull; Powered by FatherLab &copy; 2026
         </p>
       </div>
     </div>
