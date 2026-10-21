@@ -12,6 +12,7 @@ import {
   User, 
   BookOpen, 
   Archive,
+  Coins,
   LogOut 
 } from 'lucide-react';
 
@@ -106,6 +107,17 @@ export const Navbar = () => {
             >
               <Archive className="w-3.5 h-3.5" />
               Histori
+            </button>
+            <button
+              onClick={() => setActiveTab('donasi')}
+              className={`flex items-center gap-2 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+                activeTab === 'donasi'
+                  ? 'bg-white text-brand-700 shadow-sm'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
+              }`}
+            >
+              <Coins className="w-3.5 h-3.5" />
+              Donasi
             </button>
             <button
               onClick={() => setActiveTab('report')}

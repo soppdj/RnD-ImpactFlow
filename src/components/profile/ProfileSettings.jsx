@@ -144,7 +144,7 @@ export const ProfileSettings = () => {
   };
 
   return (
-    <div className="space-y-6 max-w-4xl mx-auto">
+    <div className="space-y-6">
       
       {/* Top Banner */}
       <div className="bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-6 shadow-sm">

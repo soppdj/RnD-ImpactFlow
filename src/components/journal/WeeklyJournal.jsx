@@ -467,43 +467,17 @@ export const WeeklyJournal = () => {
                 </span>
               </div>
 
-              {/* Dynamic Auto-Categorization to Agenda Preview */}
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/90 space-y-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-700">
-                    <Sparkles className="w-4 h-4 text-brand-600" />
-                    <span>Kategori Otomatis di Agenda:</span>
-                  </div>
-                  <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border uppercase tracking-wider ${liveCategory.pillClass}`}>
-                    {liveCategory.label}
-                  </span>
-                </div>
-                <p className="text-[11px] text-slate-500 leading-relaxed">
-                  Pekerjaan jurnal ini otomatis terhubung dan muncul di tab <strong>Agenda</strong> di bawah indikator KPI terkait.
-                </p>
-              </div>
-
               {/* Status Toggle in Agenda */}
-              <label className="flex items-start gap-3 p-3.5 rounded-xl border border-slate-200 bg-white cursor-pointer hover:bg-slate-50/70 transition select-none">
+              <label className="flex items-center gap-3 p-3.5 rounded-xl border border-slate-200 bg-slate-50/70 cursor-pointer hover:bg-slate-100/60 transition select-none">
                 <input
                   type="checkbox"
                   checked={formEntry.is_completed !== false}
                   onChange={(e) => setFormEntry({ ...formEntry, is_completed: e.target.checked })}
-                  className="mt-0.5 w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500"
+                  className="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500"
                 />
-                <div className="flex-1">
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-xs font-bold text-slate-800">
-                      Tandai Langsung Selesai di Agenda (✅)
-                    </span>
-                    <span className="text-[10px] px-1.5 py-0.2 rounded bg-growth-50 text-growth-700 border border-growth-200 font-semibold">
-                      Otomatis Update KPI
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
-                    Centang ini agar capaian persentase kinerja LogFrame & Donut Chart di Dashboard langsung meningkat otomatis.
-                  </p>
-                </div>
+                <span className="text-xs font-bold text-slate-800">
+                  Tandai Langsung Selesai di Agenda (✅)
+                </span>
               </label>
 
               <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-2.5">

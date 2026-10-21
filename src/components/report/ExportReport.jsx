@@ -47,9 +47,6 @@ export const ExportReport = () => {
                 Export Laporan Manajemen R&D Penghimpunan
               </h1>
             </div>
-            <p className="text-xs text-slate-500 mt-1">
-              Format formal siap cetak PDF untuk Direktur Eksekutif, Dewan Pembina & Divisi Fundraising
-            </p>
           </div>
 
           {/* Prominent Export to PDF Button */}
@@ -78,27 +75,20 @@ export const ExportReport = () => {
               <option value="Kuartal 4 (Q4 2026)">Kuartal 4 Penuh (Q4 2026)</option>
             </select>
           </div>
-          <span className="text-slate-300 hidden sm:inline">•</span>
-          <span className="text-xs text-slate-500">
-            Disesuaikan dengan standar pelaporan formal NGO (A4, print-optimized).
-          </span>
         </div>
       </div>
 
       {/* =========================================================================
           PRINTABLE FORMAL NGO REPORT CONTAINER
           ========================================================================= */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-8 sm:p-12 shadow-sm printable-report">
+      <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-10 shadow-sm printable-report">
         
         {/* Letterhead Header */}
         <div className="border-b-2 border-slate-900 pb-6 mb-6">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <span className="text-[11px] font-extrabold uppercase tracking-widest text-brand-700">
-                LAPORAN AKUNTABILITAS & STRATEGI R&D PENGHIMPUNAN
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-heading mt-1">
-                {userProfile?.foundation_name || 'YAYASAN INSAN PEDULI NUSANTARA'}
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-heading">
+                {userProfile?.foundation_name || 'Yayasan Khoirur Rooziqiin'}
               </h2>
               <p className="text-xs text-slate-600 mt-1">
                 Program Integrasi Donor Retention & Pelaporan Transparan

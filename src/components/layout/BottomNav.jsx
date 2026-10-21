@@ -5,6 +5,7 @@ import {
   CalendarCheck, 
   BookOpen, 
   Archive, 
+  Coins,
   User, 
   Plus
 } from 'lucide-react';
@@ -18,7 +19,7 @@ export const BottomNav = () => {
 
   return (
     <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/90 pb-safe shadow-lg pwa-bottom-nav">
-      <div className="grid grid-cols-5 h-16 max-w-lg mx-auto items-center px-1">
+      <div className="grid grid-cols-6 h-16 max-w-xl mx-auto items-center px-1">
         
         {/* Dashboard */}
         <button
@@ -58,6 +59,17 @@ export const BottomNav = () => {
         >
           <BookOpen className={`w-5 h-5 ${activeTab === 'journal' ? 'stroke-[2.5]' : 'stroke-2'}`} />
           <span className="text-[10px] font-medium mt-1">Jurnal</span>
+        </button>
+
+        {/* Donasi */}
+        <button
+          onClick={() => setActiveTab('donasi')}
+          className={`flex flex-col items-center justify-center py-1 transition-colors ${
+            activeTab === 'donasi' ? 'text-brand-600' : 'text-slate-500 hover:text-slate-800'
+          }`}
+        >
+          <Coins className={`w-5 h-5 ${activeTab === 'donasi' ? 'stroke-[2.5]' : 'stroke-2'}`} />
+          <span className="text-[10px] font-medium mt-1">Donasi</span>
         </button>
 
         {/* Histori Bulanan */}

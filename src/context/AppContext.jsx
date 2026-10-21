@@ -14,11 +14,24 @@ const getStoredItem = (key, fallback) => {
   return fallback;
 };
 
+// Auto-migrate profile to ensure Yayasan Khoirur Rooziqiin is always applied
+const getStoredProfile = () => {
+  const p = getStoredItem('impactflow_profile', INITIAL_USER_PROFILE);
+  if (!p || p.foundation_name === 'Yayasan Insan Peduli Nusantara' || !p.foundation_name) {
+    const updated = { ...(p || INITIAL_USER_PROFILE), foundation_name: 'Yayasan Khoirur Rooziqiin' };
+    try {
+      localStorage.setItem('impactflow_profile', JSON.stringify(updated));
+    } catch {}
+    return updated;
+  }
+  return p;
+};
+
 const AppContext = createContext(null);
 
 export const AppProvider = ({ children }) => {
   // Always initialize from localStorage cache so reopening loads last data immediately
-  const [userProfile, setUserProfile] = useState(() => getStoredItem('impactflow_profile', INITIAL_USER_PROFILE));
+  const [userProfile, setUserProfile] = useState(getStoredProfile);
   const [kpis, setKpis] = useState(() => getStoredItem('impactflow_kpis', INITIAL_KPIS));
   const [tasks, setTasks] = useState(() => getStoredItem('impactflow_tasks', INITIAL_TASKS));
   const [journalEntries, setJournalEntries] = useState(() => getStoredItem('impactflow_journal', INITIAL_JOURNAL_ENTRIES));
@@ -26,7 +39,7 @@ export const AppProvider = ({ children }) => {
   const [selectedHistoryMonth, setSelectedHistoryMonth] = useState('2026-10');
   const [loading, setLoading] = useState(true);
   const [syncStatus, setSyncStatus] = useState(isSupabaseConfigured() ? 'syncing' : 'sandbox');
-  const [activeTab, setActiveTab] = useState('dashboard'); // dashboard | agenda | journal | history | report | profile
+  const [activeTab, setActiveTab] = useState('dashboard'); // dashboard | agenda | journal | history | donasi | report | profile
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
   const [waModalTask, setWaModalTask] = useState(null);
@@ -129,8 +142,18 @@ export const AppProvider = ({ children }) => {
             .maybeSingle();
 
           if (!profileErr && profileData && isMounted) {
-            setUserProfile(profileData);
-            localStorage.setItem('impactflow_profile', JSON.stringify(profileData));
+            const sanitized = profileData.foundation_name === 'Yayasan Insan Peduli Nusantara'
+              ? { ...profileData, foundation_name: 'Yayasan Khoirur Rooziqiin' }
+              : profileData;
+            setUserProfile(sanitized);
+            localStorage.setItem('impactflow_profile', JSON.stringify(sanitized));
+          } else if (isMounted) {
+            // If Supabase profile is empty, push local profile
+            const localP = getStoredProfile();
+            setUserProfile(localP);
+            try {
+              await supabase.from('user_profile').upsert(localP);
+            } catch {}
           }
 
           // Fetch KPI Metrics
@@ -144,38 +167,69 @@ export const AppProvider = ({ children }) => {
             localStorage.setItem('impactflow_kpis', JSON.stringify(kpiData));
           }
 
-          // Fetch Tasks
+          // Fetch Tasks (Never overwrite local data with an empty response)
           const { data: taskData, error: taskErr } = await supabase
             .from('tasks')
             .select('*')
             .order('due_date', { ascending: true });
 
           if (!taskErr && taskData && isMounted) {
-            setTasks(taskData);
-            localStorage.setItem('impactflow_tasks', JSON.stringify(taskData));
+            if (taskData.length > 0) {
+              setTasks(taskData);
+              localStorage.setItem('impactflow_tasks', JSON.stringify(taskData));
+            } else {
+              // Supabase tasks is empty: preserve existing local tasks and push to Supabase
+              const localTasks = getStoredItem('impactflow_tasks', INITIAL_TASKS);
+              if (localTasks && localTasks.length > 0) {
+                setTasks(localTasks);
+                try {
+                  await supabase.from('tasks').upsert(localTasks);
+                } catch {}
+              }
+            }
           }
 
-          // Fetch Journal Entries (Persist & sync across devices)
+          // Fetch Journal Entries (Never overwrite with empty)
           const { data: journalData, error: journalErr } = await supabase
             .from('journal_entries')
             .select('*')
             .order('date', { ascending: false });
 
           if (!journalErr && journalData && isMounted) {
-            setJournalEntries(journalData);
-            localStorage.setItem('impactflow_journal', JSON.stringify(journalData));
+            if (journalData.length > 0) {
+              setJournalEntries(journalData);
+              localStorage.setItem('impactflow_journal', JSON.stringify(journalData));
+            } else {
+              const localJournal = getStoredItem('impactflow_journal', INITIAL_JOURNAL_ENTRIES);
+              if (localJournal && localJournal.length > 0) {
+                setJournalEntries(localJournal);
+                try {
+                  await supabase.from('journal_entries').upsert(localJournal);
+                } catch {}
+              }
+            }
           }
 
-          // Fetch Donation Programs (if table exists)
+          // Fetch Donation Programs (Never overwrite with empty)
           try {
             const { data: donData, error: donErr } = await supabase
               .from('donation_progress')
               .select('*')
               .order('order_index', { ascending: true });
 
-            if (!donErr && donData && donData.length > 0 && isMounted) {
-              setDonationPrograms(donData);
-              localStorage.setItem('impactflow_donation_programs', JSON.stringify(donData));
+            if (!donErr && donData && isMounted) {
+              if (donData.length > 0) {
+                setDonationPrograms(donData);
+                localStorage.setItem('impactflow_donation_programs', JSON.stringify(donData));
+              } else {
+                const localDonations = getStoredItem('impactflow_donation_programs', INITIAL_DONATION_PROGRAMS);
+                if (localDonations && localDonations.length > 0) {
+                  setDonationPrograms(localDonations);
+                  try {
+                    await supabase.from('donation_progress').upsert(localDonations);
+                  } catch {}
+                }
+              }
             }
           } catch (e) {
             // Table optional

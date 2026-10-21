@@ -85,10 +85,10 @@ export const TaskList = () => {
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       
       {/* Top Header & Search Bar */}
-      <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-sm">
+      <div className="bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-6 shadow-sm">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 font-heading">

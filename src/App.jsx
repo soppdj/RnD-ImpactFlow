@@ -4,7 +4,6 @@ import { Navbar } from './components/layout/Navbar';
 import { BottomNav } from './components/layout/BottomNav';
 import { Toast } from './components/layout/Toast';
 import { HeaderBanner } from './components/dashboard/HeaderBanner';
-import { DonationProgressTable } from './components/dashboard/DonationProgressTable';
 import { QuickStats } from './components/dashboard/QuickStats';
 import { OverallKraChart } from './components/dashboard/OverallKraChart';
 import { LogFrameProgress } from './components/dashboard/LogFrameProgress';
@@ -13,6 +12,7 @@ import { TaskModal } from './components/agenda/TaskModal';
 import { WhatsAppModal } from './components/agenda/WhatsAppModal';
 import { WeeklyJournal } from './components/journal/WeeklyJournal';
 import { CompletedHistory } from './components/history/CompletedHistory';
+import { DonationHub } from './components/donation/DonationHub';
 import { ExportReport } from './components/report/ExportReport';
 import { ProfileSettings } from './components/profile/ProfileSettings';
 import { LoginScreen } from './components/auth/LoginScreen';
@@ -35,7 +35,6 @@ export const MainContent = () => {
       {activeTab === 'dashboard' && (
         <div className="space-y-6">
           <HeaderBanner />
-          <DonationProgressTable />
           <QuickStats />
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
             <div className="lg:col-span-1">
@@ -53,6 +52,8 @@ export const MainContent = () => {
       {activeTab === 'journal' && <WeeklyJournal />}
 
       {activeTab === 'history' && <CompletedHistory />}
+
+      {activeTab === 'donasi' && <DonationHub />}
 
       {activeTab === 'report' && <ExportReport />}
 
