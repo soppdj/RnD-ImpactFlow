@@ -77,6 +77,9 @@ function App() {
     <div className="min-h-screen bg-slate-50 flex flex-col selection:bg-brand-100 selection:text-brand-900">
       <Navbar />
       <MainContent />
+      <footer className="hidden md:block py-6 border-t border-slate-200/60 bg-white/40 text-center text-xs text-slate-500 font-medium">
+        <p>R&D ImpactFlow &bull; Powered by FatherLab &copy; 2026</p>
+      </footer>
       <BottomNav />
       <TaskModal />
       <WhatsAppModal />

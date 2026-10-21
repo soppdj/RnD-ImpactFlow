@@ -177,7 +177,7 @@ export const LoginScreen = () => {
 
         {/* Footer */}
         <p className="mt-6 text-center text-xs text-slate-500 font-medium">
-          RD ImpactFlow &bull; Powered by FatherLab &copy; 2026
+          R&D ImpactFlow &bull; Powered by FatherLab &copy; 2026
         </p>
       </div>
     </div>
