@@ -15,6 +15,7 @@ import { WeeklyJournal } from './components/journal/WeeklyJournal';
 import { CompletedHistory } from './components/history/CompletedHistory';
 import { ExportReport } from './components/report/ExportReport';
 import { ProfileSettings } from './components/profile/ProfileSettings';
+import { LoginScreen } from './components/auth/LoginScreen';
 import { Loader2 } from 'lucide-react';
 
 export const MainContent = () => {
@@ -61,6 +62,17 @@ export const MainContent = () => {
 };
 
 function App() {
+  const { isAuthenticated } = useApp();
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex flex-col selection:bg-brand-100 selection:text-brand-900">
+        <LoginScreen />
+        <Toast />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col selection:bg-brand-100 selection:text-brand-900">
       <Navbar />

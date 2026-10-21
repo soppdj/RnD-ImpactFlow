@@ -10,7 +10,8 @@ import {
   LayoutDashboard, 
   User, 
   BookOpen, 
-  Archive 
+  Archive,
+  LogOut 
 } from 'lucide-react';
 
 export const Navbar = () => {
@@ -20,7 +21,8 @@ export const Navbar = () => {
     setEditingTask,
     activeTab,
     setActiveTab,
-    progressMetrics
+    progressMetrics,
+    logout
   } = useApp();
 
   const handleNewTask = () => {
@@ -152,6 +154,15 @@ export const Navbar = () => {
                 className="w-full h-full object-cover"
               />
             </div>
+
+            {/* Logout Button */}
+            <button
+              onClick={logout}
+              className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition"
+              title="Keluar Sesi (Logout)"
+            >
+              <LogOut className="w-4 h-4" />
+            </button>
 
           </div>
 

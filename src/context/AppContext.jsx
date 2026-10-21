@@ -32,6 +32,12 @@ export const AppProvider = ({ children }) => {
   const [waModalTask, setWaModalTask] = useState(null);
   const [toast, setToast] = useState(null); // { message, type }
 
+  // Private Authentication State
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem('impactflow_auth_session') === 'true';
+  });
+  const [authLoading, setAuthLoading] = useState(false);
+
   // Show Toast Helper
   const showToast = useCallback((message, type = 'info') => {
     setToast({ message, type });
@@ -53,6 +59,58 @@ export const AppProvider = ({ children }) => {
       // safe fallback
     }
   };
+
+  // Private Authentication Handlers
+  const login = useCallback(async (email, password) => {
+    setAuthLoading(true);
+    const MASTER_EMAIL = 'idnsopianto@gmail.com';
+    const MASTER_PASS = 'jY7#kliat64Sz';
+
+    // 1. Direct validation for the owner's master account
+    if (email.toLowerCase().trim() === MASTER_EMAIL.toLowerCase() && password === MASTER_PASS) {
+      localStorage.setItem('impactflow_auth_session', 'true');
+      setIsAuthenticated(true);
+      showToast('Selamat datang kembali, Pak Sopianto!', 'success');
+      setAuthLoading(false);
+      return true;
+    }
+
+    // 2. Also try Supabase Auth if credentials match a registered user
+    if (supabase && isSupabaseConfigured()) {
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: email.trim(),
+          password
+        });
+        if (!error && data?.user) {
+          localStorage.setItem('impactflow_auth_session', 'true');
+          setIsAuthenticated(true);
+          showToast('Login Supabase berhasil diverifikasi.', 'success');
+          setAuthLoading(false);
+          return true;
+        }
+      } catch (err) {
+        console.warn('Supabase Auth error fallback', err);
+      }
+    }
+
+    setAuthLoading(false);
+    showToast('Email atau password tidak sesuai. Akses privat dibatasi.', 'error');
+    return false;
+  }, [showToast]);
+
+  const logout = useCallback(async () => {
+    localStorage.removeItem('impactflow_auth_session');
+    if (supabase && isSupabaseConfigured()) {
+      try {
+        await supabase.auth.signOut();
+      } catch (e) {
+        // silent
+      }
+    }
+    setIsAuthenticated(false);
+    showToast('Sesi telah ditutup. Anda telah keluar.', 'info');
+  }, [showToast]);
 
   // 1. Initial Load & Persistence Setup
   useEffect(() => {
@@ -805,7 +863,11 @@ export const AppProvider = ({ children }) => {
         waModalTask,
         setWaModalTask,
         toast,
-        showToast
+        showToast,
+        isAuthenticated,
+        authLoading,
+        login,
+        logout
       }}
     >
       {children}
