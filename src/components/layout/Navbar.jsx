@@ -1,5 +1,6 @@
 import React from 'react';
 import { useApp } from '../../context/AppContext';
+import { AppLogo } from '../common/AppLogo';
 import { 
   Building2, 
   Sparkles, 
@@ -37,8 +38,8 @@ export const Navbar = () => {
           
           {/* Brand Logo & NGO Title */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-brand-500 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
-              <Sparkles className="w-5 h-5 text-white" />
+            <div className="flex-shrink-0 cursor-pointer" onClick={() => setActiveTab('dashboard')}>
+              <AppLogo size={40} className="w-10 h-10 drop-shadow-sm" />
             </div>
             <div>
               <div className="flex items-center gap-2">
@@ -49,7 +50,7 @@ export const Navbar = () => {
               <p className="text-xs text-slate-500 flex items-center gap-1">
                 <Building2 className="w-3 h-3 text-slate-400" />
                 <span className="truncate max-w-[180px] sm:max-w-[240px] font-medium">
-                  {userProfile?.foundation_name || 'Yayasan Philanthropy'}
+                  {userProfile?.foundation_name || 'Yayasan Khoirur Rooziqiin'}
                 </span>
               </p>
             </div>

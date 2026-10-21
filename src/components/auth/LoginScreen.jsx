@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
+import { AppLogo } from '../common/AppLogo';
 import { 
-  Sparkles, 
   Lock, 
   Mail, 
   Eye, 
@@ -58,15 +58,15 @@ export const LoginScreen = () => {
       <div className="relative sm:mx-auto sm:w-full sm:max-w-md px-4">
         {/* Brand Logo & Title */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-brand-600 to-brand-500 text-white shadow-lg shadow-brand-500/25 mb-4 ring-4 ring-white">
-            <Sparkles className="w-7 h-7 text-white" />
+          <div className="inline-flex items-center justify-center mb-4 ring-4 ring-white/90 rounded-2xl shadow-xl shadow-brand-600/20">
+            <AppLogo size={60} className="w-15 h-15 drop-shadow-md" />
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-heading">
             R&D ImpactFlow
           </h1>
-          <p className="mt-2 text-xs sm:text-sm text-slate-600 flex items-center justify-center gap-1.5">
-            <Building2 className="w-4 h-4 text-slate-400" />
-            <span>Portal Privat Solo R&D Lead & Manajemen</span>
+          <p className="mt-2 text-xs sm:text-sm text-slate-600 flex items-center justify-center gap-1.5 font-medium">
+            <Building2 className="w-4 h-4 text-brand-600" />
+            <span>Portal Privat RD Yayasan Khoirur Rooziqiin</span>
           </p>
         </div>
 
@@ -93,7 +93,7 @@ export const LoginScreen = () => {
             {/* Email Field */}
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                Email Terdaftar
+                Email
               </label>
               <div className="relative rounded-xl shadow-2xs">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -114,7 +114,7 @@ export const LoginScreen = () => {
             {/* Password Field */}
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                Kata Sandi Privat
+                Kata Sandi
               </label>
               <div className="relative rounded-xl shadow-2xs">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -176,8 +176,8 @@ export const LoginScreen = () => {
         </div>
 
         {/* Footer */}
-        <p className="mt-6 text-center text-[11px] text-slate-400">
-          R&D ImpactFlow &bull; Hak Akses Terbatas Yayasan Filantropi &copy; 2026
+        <p className="mt-6 text-center text-xs text-slate-500 font-medium">
+          RD ImpactFlow . Powered by FatherLab c 2026
         </p>
       </div>
     </div>

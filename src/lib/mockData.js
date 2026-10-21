@@ -5,7 +5,7 @@
 export const INITIAL_USER_PROFILE = {
   id: 'default_user',
   full_name: 'Farhan Maulana, S.Sos., M.M.',
-  foundation_name: 'Yayasan Insan Peduli Nusantara',
+  foundation_name: 'Yayasan Khoirur Rooziqiin',
   monthly_target: 'Oktober 2026: Program Integrasi Donor Retention & Pelaporan Transparan (Target Churn Rate Turun dari 30% ke 10% & Uji Coba Auto-Debet Sedekah Subuh)',
   quarterly_target: 'Oktober 2026: Program Integrasi Donor Retention & Pelaporan Transparan (Target Churn Rate Turun dari 30% ke 10% & Uji Coba Auto-Debet Sedekah Subuh)',
   daily_working_hours: 8,

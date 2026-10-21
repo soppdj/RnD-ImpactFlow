@@ -11,7 +11,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE IF NOT EXISTS public.user_profile (
     id TEXT PRIMARY KEY DEFAULT 'default_user',
     full_name TEXT NOT NULL DEFAULT 'Farhan Maulana, S.Sos., M.M.',
-    foundation_name TEXT NOT NULL DEFAULT 'Yayasan Insan Peduli Nusantara',
+    foundation_name TEXT NOT NULL DEFAULT 'Yayasan Khoirur Rooziqiin',
     monthly_target TEXT NOT NULL DEFAULT 'Oktober 2026: Program Integrasi Donor Retention & Pelaporan Transparan (Target Churn Rate Turun dari 30% ke 10% & Uji Coba Auto-Debet Sedekah Subuh)',
     quarterly_target TEXT DEFAULT 'Oktober 2026: Program Integrasi Donor Retention & Pelaporan Transparan',
     daily_working_hours NUMERIC NOT NULL DEFAULT 8,
@@ -118,7 +118,7 @@ INSERT INTO public.user_profile (id, full_name, foundation_name, monthly_target,
 VALUES (
     'default_user',
     'Farhan Maulana, S.Sos., M.M.',
-    'Yayasan Insan Peduli Nusantara',
+    'Yayasan Khoirur Rooziqiin',
     'Oktober 2026: Program Integrasi Donor Retention & Pelaporan Transparan (Target Churn Rate Turun dari 30% ke 10% & Uji Coba Auto-Debet Sedekah Subuh)',
     'Oktober 2026: Program Integrasi Donor Retention & Pelaporan Transparan (Target Churn Rate Turun dari 30% ke 10% & Uji Coba Auto-Debet Sedekah Subuh)',
     8,
