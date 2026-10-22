@@ -81,7 +81,7 @@ export const LogFrameProgress = () => {
             </div>
             <div>
               <h2 className="font-heading font-bold text-base text-slate-900">
-                Logical Framework (LogFrame): Program Pemulihan & Retensi Donatur
+                Logical Framework: Program Pemulihan & Retensi Donatur
               </h2>
               <p className="text-xs text-slate-500 mt-0.5">
                 Rantai nilai logis: Goal ➔ Outcome ➔ Output ➔ Activities terhubung langsung ke tugas operasional

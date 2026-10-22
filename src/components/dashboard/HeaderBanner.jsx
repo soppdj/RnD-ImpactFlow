@@ -37,7 +37,7 @@ export const HeaderBanner = () => {
           </div>
 
           <h1 className="text-2xl sm:text-3xl font-extrabold text-teal-950 tracking-tight font-heading">
-            Selamat datang kembali, <span className="text-brand-600">{userProfile?.full_name || 'R&D Lead'}</span>
+            Assalamu'alaikum, <span className="text-brand-600">{userProfile?.full_name || 'R&D Lead'}</span>
           </h1>
 
           {/* Subtitle: Target Bulan Ini (fetched from Supabase user_profile) */}
@@ -76,7 +76,7 @@ export const HeaderBanner = () => {
                 {userProfile?.daily_working_hours || 8} Jam/Hari
               </span>
             </div>
-            <p className="text-[11px] text-teal-700 mt-1">Solo R&D operational budget</p>
+            
           </div>
 
           <div className="flex-1 md:flex-initial bg-emerald-50/80 p-3.5 rounded-xl border border-emerald-200/80">

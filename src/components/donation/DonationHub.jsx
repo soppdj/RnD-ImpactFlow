@@ -118,8 +118,14 @@ export const DonationHub = () => {
 
   const formatShortRupiah = (value) => {
     const num = parseFloat(value) || 0;
-    if (num >= 1000000000) return `Rp ${(num / 1000000000).toFixed(1)} M`;
-    if (num >= 1000000) return `Rp ${(num / 1000000).toFixed(1)} Jt`;
+    if (num >= 1000000000) {
+      const v = num / 1000000000;
+      return `Rp ${v % 1 === 0 ? v : v.toFixed(1)} M`;
+    }
+    if (num >= 1000000) {
+      const v = num / 1000000;
+      return `Rp ${v % 1 === 0 ? v : v.toFixed(1)} Jt`;
+    }
     if (num >= 1000) return `Rp ${(num / 1000).toFixed(0)} Rb`;
     return `Rp ${num}`;
   };
@@ -200,7 +206,7 @@ export const DonationHub = () => {
             <span className="font-semibold text-slate-200">{formatRupiah(targetVal)}</span>
           </div>
           <div className="flex items-center justify-between gap-4">
-            <span className="text-teal-300 font-semibold">Realisasi (Terkumpul):</span>
+            <span className="text-teal-300 font-semibold">Realisasi:</span>
             <span className="font-bold text-teal-300">{formatRupiah(actualVal)}</span>
           </div>
           <div className="flex items-center justify-between gap-4 pt-1.5 border-t border-slate-800 text-[11px]">
@@ -426,14 +432,9 @@ export const DonationHub = () => {
             <span className="p-1.5 rounded-lg bg-teal-50 text-brand-600 border border-teal-200/60 shadow-2xs">
               <BarChart3 className="w-4 h-4" />
             </span>
-            <div className="flex items-center gap-2">
-              <h2 className="text-sm sm:text-base font-bold text-teal-950 font-heading">
-                Grafik Progres Penghimpunan Donasi
-              </h2>
-              <span className="px-2 py-0.5 rounded-md bg-teal-100 text-teal-800 text-[10px] font-bold border border-teal-200 uppercase tracking-wider">
-                3D View
-              </span>
-            </div>
+            <h2 className="text-sm sm:text-base font-bold text-teal-950 font-heading">
+              Grafik Progres Penghimpunan Donasi
+            </h2>
           </div>
           <span className="text-xs font-medium text-teal-700 hidden sm:inline">
             Unit: Rupiah (IDR)
@@ -442,7 +443,7 @@ export const DonationHub = () => {
 
         <div className="w-full pt-2" style={{ height: '360px', minHeight: '360px' }}>
           <ResponsiveContainer width="100%" height="100%" minHeight={340}>
-            <BarChart data={chartData} margin={{ top: 20, right: 15, left: 10, bottom: 20 }}>
+            <BarChart data={chartData} barGap={1} barCategoryGap="28%" margin={{ top: 25, right: 20, left: 10, bottom: 20 }}>
               {/* SVG 3D Gradients Definition */}
               <defs>
                 <linearGradient id="tosca3dGrad" x1="0" y1="0" x2="0" y2="1">
@@ -463,6 +464,7 @@ export const DonationHub = () => {
                 tickLine={false}
               />
               <YAxis 
+                width={72}
                 tickFormatter={formatShortRupiah} 
                 tick={{ fill: '#134e4a', fontSize: 11 }} 
                 axisLine={false}
@@ -485,7 +487,7 @@ export const DonationHub = () => {
               />
               <Bar 
                 dataKey="Realisasi" 
-                name="Realisasi (Terkumpul)" 
+                name="Realisasi" 
                 fill="#0d9488" 
                 maxBarSize={40} 
                 shape={(barProps) => <Custom3DBar {...barProps} isRealisasi={true} />}

@@ -351,7 +351,7 @@ export const ProfileSettings = () => {
                 <span>Akun Privat Terdaftar</span>
               </div>
               <p className="text-teal-800 text-[11px]">
-                idnsopianto@gmail.com (Hak Akses Owner)
+                idnsopianto@gmail.com
               </p>
             </div>
 
