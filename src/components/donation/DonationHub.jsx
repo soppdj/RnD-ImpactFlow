@@ -29,16 +29,19 @@ import {
 
 // Custom 3D Isometric Bar Component for Recharts
 const Custom3DBar = (props) => {
-  const { x, y, width, height, isRealisasi } = props;
-  if (!height || height <= 0 || isNaN(y) || isNaN(x)) return null;
+  const { x, y, width, height } = props;
+  const isRealisasi = props.isRealisasi ?? (props.dataKey === 'Realisasi');
+
+  if (!height || height <= 0 || isNaN(y) || isNaN(x) || isNaN(width)) return null;
 
   // Depth of 3D extrusion, dynamically constrained
-  const depth = Math.min(8, Math.max(3, Math.min(width * 0.28, height * 0.4)));
+  const depth = Math.min(10, Math.max(5, (width || 32) * 0.28));
 
   // 3D Facet Fills (Front, Top Highlight, Side Shadow)
   const frontFill = isRealisasi ? 'url(#tosca3dGrad)' : 'url(#target3dGrad)';
-  const topFill = isRealisasi ? '#5eead4' : '#e2e8f0'; // crisp light reflection on top
+  const topFill = isRealisasi ? '#5eead4' : '#cbd5e1'; // crisp light reflection on top
   const sideFill = isRealisasi ? '#0f766e' : '#475569'; // deeper ambient shadow on right facet
+  const strokeColor = isRealisasi ? '#115e59' : '#334155';
 
   return (
     <g className="transition-all duration-300">
@@ -49,6 +52,8 @@ const Custom3DBar = (props) => {
         width={width}
         height={height}
         fill={frontFill}
+        stroke={strokeColor}
+        strokeWidth={0.75}
         rx={1}
       />
       {/* Top Face (3D Roof Highlight) */}
@@ -60,7 +65,9 @@ const Custom3DBar = (props) => {
           ${x + width},${y}
         `}
         fill={topFill}
-        opacity={0.95}
+        stroke={strokeColor}
+        strokeWidth={0.75}
+        opacity={0.98}
       />
       {/* Right Side Face (3D Depth Shadow) */}
       <polygon
@@ -71,7 +78,9 @@ const Custom3DBar = (props) => {
           ${x + width},${y + height}
         `}
         fill={sideFill}
-        opacity={0.9}
+        stroke={strokeColor}
+        strokeWidth={0.75}
+        opacity={0.95}
       />
     </g>
   );
@@ -223,6 +232,20 @@ export const DonationHub = () => {
   return (
     <div className="space-y-6">
       
+      {/* Global SVG 3D Gradients */}
+      <svg className="sr-only" width="0" height="0" aria-hidden="true">
+        <defs>
+          <linearGradient id="tosca3dGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#14b8a6" />
+            <stop offset="100%" stopColor="#0d9488" />
+          </linearGradient>
+          <linearGradient id="target3dGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#94a3b8" />
+            <stop offset="100%" stopColor="#64748b" />
+          </linearGradient>
+        </defs>
+      </svg>
+
       {/* Top Header Card - Cleaned subtitle per user request */}
       <div className="bg-white/95 rounded-2xl border border-teal-200/80 p-5 sm:p-6 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -403,17 +426,22 @@ export const DonationHub = () => {
             <span className="p-1.5 rounded-lg bg-teal-50 text-brand-600 border border-teal-200/60 shadow-2xs">
               <BarChart3 className="w-4 h-4" />
             </span>
-            <h2 className="text-sm sm:text-base font-bold text-teal-950 font-heading">
-              Grafik Progres Penghimpunan Donasi
-            </h2>
+            <div className="flex items-center gap-2">
+              <h2 className="text-sm sm:text-base font-bold text-teal-950 font-heading">
+                Grafik Progres Penghimpunan Donasi
+              </h2>
+              <span className="px-2 py-0.5 rounded-md bg-teal-100 text-teal-800 text-[10px] font-bold border border-teal-200 uppercase tracking-wider">
+                3D View
+              </span>
+            </div>
           </div>
           <span className="text-xs font-medium text-teal-700 hidden sm:inline">
             Unit: Rupiah (IDR)
           </span>
         </div>
 
-        <div className="h-76 w-full pt-2">
-          <ResponsiveContainer width="100%" height="100%">
+        <div className="w-full pt-2" style={{ height: '360px', minHeight: '360px' }}>
+          <ResponsiveContainer width="100%" height="100%" minHeight={340}>
             <BarChart data={chartData} margin={{ top: 20, right: 15, left: 10, bottom: 20 }}>
               {/* SVG 3D Gradients Definition */}
               <defs>
@@ -450,16 +478,18 @@ export const DonationHub = () => {
               <Bar 
                 dataKey="Target" 
                 name="Target Donasi" 
-                fill="#94a3b8" 
-                maxBarSize={42} 
-                shape={(props) => <Custom3DBar {...props} isRealisasi={false} />}
+                fill="#64748b" 
+                maxBarSize={40} 
+                shape={(barProps) => <Custom3DBar {...barProps} isRealisasi={false} />}
+                isAnimationActive={false}
               />
               <Bar 
                 dataKey="Realisasi" 
                 name="Realisasi (Terkumpul)" 
                 fill="#0d9488" 
-                maxBarSize={42} 
-                shape={(props) => <Custom3DBar {...props} isRealisasi={true} />}
+                maxBarSize={40} 
+                shape={(barProps) => <Custom3DBar {...barProps} isRealisasi={true} />}
+                isAnimationActive={false}
               />
             </BarChart>
           </ResponsiveContainer>
